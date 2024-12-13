@@ -1,0 +1,11 @@
+appId: ws.hanzo.Vrrh
+
+---
+- runScript: "../resources/antecipar-parcelas-android.js"
+- tapOn: ${output.anteciparParcelas.financialSolutions}
+- tapOn: ${output.anteciparParcelas.myLoans}
+- tapOn:
+    text: ${output.anteciparParcelas.consignedCredit}
+    index: 2
+- runScript: "../resources/credito-consignado-android.js"
+- tapOn: ${output.consignedCredit.icon}

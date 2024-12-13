@@ -1,0 +1,16 @@
+appId: ws.hanzo.Vrrh
+
+---
+- launchApp:
+    clearState: true
+- runScript: "../resources/login-android.js"
+- tapOn:
+    id: ${output.login.enterButton}
+- tapOn: ${output.login.emailField}
+- inputText: "${USER_NAME}"
+- tapOn: ${output.login.passwordField}
+- inputText: ${PASSWORD}
+- action: hideKeyboard
+- tapOn:
+    id: ${output.login.loginButton}
+- tapOn: ${output.login.modalAfterLogin}

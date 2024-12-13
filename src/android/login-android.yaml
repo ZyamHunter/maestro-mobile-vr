@@ -1,0 +1,12 @@
+appId: ws.hanzo.Vrrh
+env:
+    USER_NAME: cliente10@teste.com.br
+    PASSWORD: Vr@123456
+    PLATFORM: android
+
+tags:
+  - android
+  - passing
+
+---
+- runFlow: subflows/onboarding-android.yaml

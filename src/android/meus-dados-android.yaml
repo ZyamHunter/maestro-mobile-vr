@@ -1,0 +1,17 @@
+appId: ws.hanzo.Vrrh
+env:
+    USER_NAME: cliente31@teste.com.br
+    PASSWORD: Vr@123456
+    PLATFORM: android
+
+tags:
+  - android
+  - passing
+
+---
+- runFlow: subflows/onboarding-android.yaml
+- tapOn: "Menu"
+- tapOn: "Meus dados"
+- assertVisible: "Meus Dados"
+- assertVisible: "Editar dados"
+- assertVisible: "Editar foto"

@@ -1,0 +1,17 @@
+{
+  "name": "maestro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "adb kill-server && adb start-server",
+    "android": "~/Library/Android/sdk/emulator/emulator -avd Test",
+    "ios": "open -a Simulator.app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

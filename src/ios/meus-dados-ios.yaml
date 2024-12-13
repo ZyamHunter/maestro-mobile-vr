@@ -1,0 +1,17 @@
+appId: ws.hanzo.Vrrh
+env:
+    USER_NAME: cliente10@teste.com.br
+    PASSWORD: Vr@123456
+    PLATFORM: ios
+
+tags:
+  - ios
+  - passing
+
+---
+- runFlow: subflows/onboarding-ios.yaml
+- tapOn: "Menu"
+- tapOn: "Meus dados"
+- assertVisible: "Meus Dados"
+- assertVisible: "Editar dados"
+- assertVisible: "Editar foto"

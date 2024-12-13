@@ -1,0 +1,3 @@
+output.consignedCredit = {
+    icon: ''
+}
