@@ -1,0 +1,179 @@
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - "feature/**"
+      - "fix/**"
+      - "release/**"
+    paths-ignore:
+      - "**/*.md"
+      - .scafflater/**
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - "**/*.md"
+      - .scafflater/**
+  workflow_dispatch:
+  repository_dispatch:
+    types: ["Standard"]
+
+name: Standard
+
+env:
+  app_name: "testes"
+  aws_region: "us-east-1"
+  dockerfilePath: "dockerfiles/Dockerfile"
+  SLACK_WEBHOOK: ${{ vars.SLACK_WEBHOOK }}
+  SLACK_WEBHOOK_DEPLOY: ${{ vars.SLACK_WEBHOOK_DEPLOY }}
+
+jobs:
+  ci_android:
+    name: CI - Test Android
+    runs-on: ["self-hosted"]
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v4
+      - name: ⚙️ Default Steps
+        uses: ./.github/actions/setup-composite
+      - name: 🧪 Run Maestro Android tests
+        run: |
+          echo "Rodando testes no maestro cloud para Android"
+        continue-on-error: true
+      - name: ⬆️ Upload Maestro Android results
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-report
+          path: android
+
+  ci_ios:
+    name: CI - Test iOS
+    if: always ()
+    runs-on: ["self-hosted"]
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v4
+      - name: ⚙️ Default Steps
+        uses: ./.github/actions/setup-composite
+      - name: 🧪 Run Maestro iOS tests
+        run: |
+          echo "Rodando testes no maestro cloud para iOS"
+        continue-on-error: true
+      - name: ⬆️ Upload Maestro iOS results
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-report
+          path: ios
+
+  report_slack:
+    name: CI - Send Test Status to Slack
+    needs: [ci_android, ci_ios]
+    if: ${{ !github.event.client_payload }}
+    runs-on: ["self-hosted"]
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Python Cache
+        uses: actions/cache@v4
+        id: cache
+        with:
+          path: /opt/hostedtoolcache/Python/
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: pip-
+      - name: ⬇️ Download Artifacts
+        uses: actions/download-artifact@v4
+      - run: ls
+      - name: 📁 Rename paths
+        run: |
+          mv android-report android
+          mv ios-report ios
+      - name: 📨 Run Curl Message To Slack
+        run: |
+          robot -t Report_Tests -v PLATAFORM:Back-End ./Helpers/Curl_Slack.robot
+      - name: ⬆️ Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: report
+
+  report_slack_deploy:
+    name: CI - Report Tests Before Deploy
+    needs: [ci_android, ci_ios]
+    if: ${{ github.event.client_payload }}
+    runs-on: ["self-hosted"]
+    env: 
+      DEPLOY: true
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Python Cache
+        uses: actions/cache@v4
+        id: cache
+        with:
+          path: /opt/hostedtoolcache/Python/
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: pip-
+      - name: ⬇️ Download Artifacts
+        uses: actions/download-artifact@v4
+      - run: ls
+      - name: 📁 Rename paths
+        run: |
+          mv android-report android
+          mv ios-report ios
+      - name: 📨 Run Curl Message To Slack
+        run: |
+          robot -t Curl_Tests_Deploy -v PLATAFORM:Back-End ./Helpers/Curl_Slack.robot
+      - name: ⬆️ Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: report
+
+  sonar:
+    name: Sonar
+    needs: [ci_android, ci_ios]
+    if: always ()
+    runs-on: ["self-hosted"]
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v4
+      - name: 🤔 Sonar Analysis
+        uses: SonarSource/sonarcloud-github-action@master
+        if: ${{ vars.SONAR_ENABLED == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+
+  dispatch:
+    name: Dispatch Build
+    needs: report_slack
+    if: ${{ github.event.client_payload }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo: ['ORGANIZATION_NAME/REPO_NAME']
+    timeout-minutes: 8
+    env: 
+      TOKEN_OTHER_REPO: ${{ secrets.TOKEN_OTHER_REPO }}
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v4
+      - name: ⬇️ Download Artifacts
+        uses: actions/download-artifact@v4
+      - run: ls
+      - name: 📁 Rename paths
+        run: |
+          mv test-report report
+      - name: Dispatch Build
+        run: |
+            chmod +x report.sh
+            sh report.sh
