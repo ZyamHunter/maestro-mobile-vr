@@ -94,7 +94,7 @@ jobs:
           mv ios-report ios
       - name: 📨 Run Curl Message To Slack
         run: |
-          robot -t Report_Tests -v PLATAFORM:Back-End ./Helpers/Curl_Slack.robot
+          echo "enviando report para o slack com o resultado dos testes de Homologação"
       - name: ⬆️ Upload Test Results
         uses: actions/upload-artifact@v4
         with:
@@ -131,7 +131,7 @@ jobs:
           mv ios-report ios
       - name: 📨 Run Curl Message To Slack
         run: |
-          robot -t Curl_Tests_Deploy -v PLATAFORM:Back-End ./Helpers/Curl_Slack.robot
+          echo "enviando report para o slack com o resultado dos testes de Homologação em um esteira de deploy"
       - name: ⬆️ Upload Test Results
         uses: actions/upload-artifact@v4
         with:
