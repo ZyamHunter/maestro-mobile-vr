@@ -1,3 +1,3 @@
 output.consignedCredit = {
-    icon: ''
+    icon: 'open-modal-help'
 }

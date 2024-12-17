@@ -5,11 +5,12 @@ appId: ws.hanzo.Vrrh
 - tapOn: ${output.anteciparParcelas.financialSolutions}
 - tapOn: ${output.anteciparParcelas.myLoans}
 - tapOn:
-    text: ${output.anteciparParcelas.consignedCredit}
-    index: 2
+    id: ${output.anteciparParcelas.consignedCredit}
 - tapOn: ${output.anteciparParcelas.moreDetails}
-- tapOn: ${output.anteciparParcelas.plotDetails}
-- tapOn: ${output.anteciparParcelas.advanceInstallments}
+- tapOn:
+    id: ${output.anteciparParcelas.plotDetails}
+- tapOn:
+    id: ${output.anteciparParcelas.advanceInstallments}
 - tapOn:
     id: ${output.anteciparParcelas.checkbox}
 - tapOn: ${output.anteciparParcelas.continueButton}

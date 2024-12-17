@@ -5,7 +5,7 @@ appId: ws.hanzo.Vrrh
 - tapOn: ${output.anteciparParcelas.financialSolutions}
 - tapOn: ${output.anteciparParcelas.myLoans}
 - tapOn:
-    text: ${output.anteciparParcelas.consignedCredit}
-    index: 2
-- runScript: "../resources/credito-consignado-android.js"
-- tapOn: ${output.consignedCredit.icon}
+    id: ${output.anteciparParcelas.consignedCredit}
+- runScript: "../resources/credito-consignado-ios.js"
+- tapOn:
+    id: ${output.consignedCredit.icon}

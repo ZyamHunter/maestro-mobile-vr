@@ -10,5 +10,11 @@ tags:
 
 ---
 - runFlow: subflows/onboarding-ios.yaml
-- tapOn: "Meu\nRH"
+- runScript: "./resources/rotina-ios.js"
+- tapOn:
+    id: ${output.rotina.rotinaTab}
+    waitUntilVisible: true
+- tapOn:
+    text: ${output.rotina.meuRH}
+    waitUntilVisible: true
 - assertVisible: "VR e Pontomais!"

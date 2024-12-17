@@ -10,4 +10,8 @@ tags:
 
 ---
 - runFlow: subflows/onboarding-ios.yaml
-- runFlow: subflows/antecipar-parcelas-ios.yaml
+- runScript: "./resources/rotina-ios.js"
+- tapOn:
+    id: ${output.rotina.rotinaTab}
+    waitUntilVisible: true
+- runFlow: subflows/credito-consignado-ios.yaml

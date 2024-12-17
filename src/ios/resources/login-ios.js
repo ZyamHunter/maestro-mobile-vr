@@ -1,7 +1,7 @@
 output.login = {
-    enterButton: 'Já tenho cadastro',
+    enterButton: 'btn-acessar',
     emailField: 'Digite seu e-mail',
     passwordField: 'Digite sua senha',
-    loginButton: 'Entrar',
-    modalAfterLogin: 'Não quero ativar agora'
+    loginButton: 'btn-entrar',
+    modalAfterLogin: 'modal-biometric'
 }
