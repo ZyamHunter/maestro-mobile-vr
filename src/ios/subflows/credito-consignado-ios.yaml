@@ -2,10 +2,16 @@ appId: ws.hanzo.Vrrh
 
 ---
 - runScript: "../resources/antecipar-parcelas-ios.js"
-- tapOn: ${output.anteciparParcelas.financialSolutions}
-- tapOn: ${output.anteciparParcelas.myLoans}
+- tapOn:
+    text: ${output.anteciparParcelas.financialSolutions}
+    waitUntilVisible: true
+- tapOn:
+    text: ${output.anteciparParcelas.myLoans}
+    waitUntilVisible: true
 - tapOn:
     id: ${output.anteciparParcelas.consignedCredit}
+    waitUntilVisible: true
 - runScript: "../resources/credito-consignado-ios.js"
 - tapOn:
     id: ${output.consignedCredit.icon}
+    waitUntilVisible: true

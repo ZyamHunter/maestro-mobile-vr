@@ -1,6 +1,6 @@
 appId: ws.hanzo.Vrrh
 env:
-    USER_NAME: cliente10@teste.com.br
+    USER_NAME: cliente31@teste.com.br
     PASSWORD: Vr@123456
     PLATFORM: ios
 
@@ -14,4 +14,7 @@ tags:
 - tapOn:
     id: ${output.rotina.rotinaTab}
     waitUntilVisible: true
+- swipe:
+    start:  50%, 75%
+    end:  50%, 40%
 - runFlow: subflows/antecipar-parcelas-ios.yaml
