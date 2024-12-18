@@ -6,11 +6,19 @@ appId: ws.hanzo.Vrrh
 - runScript: "../resources/login-android.js"
 - tapOn:
     id: ${output.login.enterButton}
-- tapOn: ${output.login.emailField}
+    waitUntilVisible: true
+- tapOn:
+    text: ${output.login.emailField}
+    waitUntilVisible: true
 - inputText: "${USER_NAME}"
-- tapOn: ${output.login.passwordField}
+- tapOn:
+    text: ${output.login.passwordField}
+    waitUntilVisible: true
 - inputText: ${PASSWORD}
 - action: hideKeyboard
 - tapOn:
     id: ${output.login.loginButton}
-- tapOn: ${output.login.modalAfterLogin}
+    waitUntilVisible: true
+- tapOn:
+    text: ${output.login.modalAfterLogin}
+    waitUntilVisible: true

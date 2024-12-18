@@ -1,6 +1,6 @@
 appId: ws.hanzo.Vrrh
 env:
-    USER_NAME: cliente10@teste.com.br
+    USER_NAME: cliente33@teste.com.br
     PASSWORD: Vr@123456
     PLATFORM: android
 
@@ -10,7 +10,10 @@ tags:
 
 ---
 - runFlow: subflows/onboarding-android.yaml
-- tapOn: "Rotina"
+- runScript: "./resources/rotina-android.js"
+- tapOn:
+    id: ${output.rotina.rotinaTab}
+    waitUntilVisible: true
 - swipe:
     direction: "UP"
 - runFlow: subflows/antecipar-parcelas-android.yaml

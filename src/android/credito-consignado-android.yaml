@@ -10,7 +10,10 @@ tags:
 
 ---
 - runFlow: subflows/onboarding-android.yaml
-- tapOn: "Rotina"
+- runScript: "./resources/rotina-android.js"
+- tapOn:
+    id: ${output.rotina.rotinaTab}
+    waitUntilVisible: true
 - swipe:
     direction: "UP"
 - runFlow: subflows/credito-consignado-android.yaml

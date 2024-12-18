@@ -2,15 +2,28 @@ appId: ws.hanzo.Vrrh
 
 ---
 - runScript: "../resources/antecipar-parcelas-android.js"
-- tapOn: ${output.anteciparParcelas.financialSolutions}
-- tapOn: ${output.anteciparParcelas.myLoans}
 - tapOn:
-    text: ${output.anteciparParcelas.consignedCredit}
-    index: 2
-- tapOn: ${output.anteciparParcelas.moreDetails}
-- tapOn: ${output.anteciparParcelas.plotDetails}
-- tapOn: ${output.anteciparParcelas.advanceInstallments}
+    text: ${output.anteciparParcelas.financialSolutions}
+    waitUntilVisible: true
+- tapOn:
+    text: ${output.anteciparParcelas.myLoans}
+    waitUntilVisible: true
+- tapOn:
+    id: ${output.anteciparParcelas.consignedCredit}
+    waitUntilVisible: true
+- tapOn:
+    id: ${output.anteciparParcelas.moreDetails}
+    waitUntilVisible: true
+- tapOn:
+    id: ${output.anteciparParcelas.plotDetails}
+    waitUntilVisible: true
+- tapOn:
+    id: ${output.anteciparParcelas.advanceInstallments}
+    waitUntilVisible: true
 - tapOn:
     id: ${output.anteciparParcelas.checkbox}
-- tapOn: ${output.anteciparParcelas.continueButton}
+    waitUntilVisible: true
+- tapOn:
+    id: ${output.anteciparParcelas.continueButton}
+    waitUntilVisible: true
 - tapOn: ${output.anteciparParcelas.generateTicket}

@@ -10,8 +10,12 @@ tags:
 
 ---
 - runFlow: subflows/onboarding-android.yaml
-- tapOn: "Menu"
-- tapOn: "Meus dados"
+- runScript: "./resources/rotina-android.js"
+- tapOn:
+    id: ${output.rotina.menuTab}
+    waitUntilVisible: true
+- tapOn:
+    point: 17%,31%
 - assertVisible: "Meus Dados"
 - assertVisible: "Editar dados"
 - assertVisible: "Editar foto"

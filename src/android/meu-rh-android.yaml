@@ -10,8 +10,13 @@ tags:
 
 ---
 - runFlow: subflows/onboarding-android.yaml
-- tapOn: "Rotina"
+- runScript: "./resources/rotina-android.js"
+- tapOn:
+    id: ${output.rotina.rotinaTab}
+    waitUntilVisible: true
 - swipe:
     direction: "UP"
-- tapOn: "Meu\nRH"
+- tapOn:
+    text: ${output.rotina.meuRH}
+    waitUntilVisible: true
 - assertVisible: "VR e Pontomais!"
